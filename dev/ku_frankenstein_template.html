@@ -1,3 +1,4 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rock Chalk Roulette</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iMzIiIGZpbGw9IiMwZDFiMmUiLz4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIyNCIgZmlsbD0iI2U4NDM1YiIvPgogIDxnIHN0cm9rZT0iIzRjODZkNiIgc3Ryb2tlLXdpZHRoPSIyLjQiIGZpbGw9Im5vbmUiPgogICAgPHBhdGggZD0iTTMyIDggVjU2Ii8+CiAgICA8cGF0aCBkPSJNOCAzMiBINTYiLz4KICAgIDxwYXRoIGQ9Ik0xMyAxNSBRMzIgMzIgMTMgNDkiLz4KICAgIDxwYXRoIGQ9Ik01MSAxNSBRMzIgMzIgNTEgNDkiLz4KICA8L2c+Cjwvc3ZnPgo=">
 <style>
@@ -496,6 +497,17 @@
     .tier{ padding-top:6px; }
     .tier em{ display:none; }
     .controls{ margin-top:8px; }
+
+    /* .btn's desktop padding (8px 14px, 12px font) renders at ~32-34px tall --
+       under the ~44px minimum tap-target size every platform's guidelines
+       recommend. Bump it up on touch-sized screens only; leave the compact
+       desktop sizing alone. */
+    .btn{ padding:13px 16px; font-size:13px; min-height:44px; box-sizing:border-box; display:inline-flex; align-items:center; justify-content:center; }
+
+    /* .move-btn is even smaller than .btn (~20px tall) -- and it's the button
+       for the dual-position "move a player to open a spot" mechanic, one of
+       the two things called out in the hero subtitle. Same tap-target fix. */
+    .move-btn{ padding:10px 12px; font-size:12px; min-height:40px; box-sizing:border-box; display:inline-flex; align-items:center; justify-content:center; }
   }
 </style>
 
