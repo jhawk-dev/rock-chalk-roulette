@@ -1030,7 +1030,7 @@
       ctx.fillText(line, W / 2, 300 + i * 34);
     });
 
-    var rowTop = 400, rowH = 138, rowGap = 16;
+    var rowTop = 400, rowH = 128, rowGap = 14;
     ctx.textAlign = "left";
     POSITIONS.forEach(function(pos, i){
       var y = rowTop + i * (rowH + rowGap);
@@ -1105,7 +1105,11 @@
 
     ctx.fillStyle = "rgba(255,255,255,0.12)";
     ctx.font = "600 26px JBMono, monospace";
-    ctx.fillText("ROCK CHALK ROULETTE", W / 2, H - 40);
+    ctx.fillText("ROCK CHALK ROULETTE", W / 2, H - 56);
+
+    ctx.fillStyle = soft;
+    ctx.font = "600 24px JBMono, monospace";
+    ctx.fillText("rockchalkroulette.com", W / 2, H - 24);
 
     return canvas;
   }
