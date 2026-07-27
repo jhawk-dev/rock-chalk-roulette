@@ -2410,7 +2410,7 @@
         "fg": 42.9,
         "ft": 25.0,
         "blurb": "6-3 guard from Topeka, Kan.",
-        "classYear": "Freshman"
+        "classYear": "Sophomore"
       },
       {
         "name": "Eddie Dater",
@@ -2641,7 +2641,7 @@
         "fg": 80.0,
         "ft": 80.0,
         "blurb": "6-3 guard from Topeka, Kan.",
-        "classYear": "Sophomore"
+        "classYear": "Junior"
       },
       {
         "name": "Eddie Dater",
@@ -2899,7 +2899,7 @@
         "fg": 30.8,
         "ft": 100.0,
         "blurb": "6-3 guard from Topeka, Kan.",
-        "classYear": "Junior"
+        "classYear": "Senior"
       },
       {
         "name": "Al Donaghue",
@@ -17486,24 +17486,6 @@
         "ft": 78.6,
         "blurb": "6-6 guard from Burlington, Kan.",
         "classYear": "Sophomore"
-      },
-      {
-        "name": "John Cleland",
-        "season": "2020–21",
-        "pos": "G",
-        "posEligible": [
-          "G"
-        ],
-        "ppg": 9.7,
-        "rpg": 5.2,
-        "apg": 1.9,
-        "spg": 1.2,
-        "bpg": 0.4,
-        "fg": 38.0,
-        "tp": 34.0,
-        "ft": 78.6,
-        "blurb": "6-3 guard from Topeka, Kan.",
-        "classYear": "Senior"
       },
       {
         "name": "Tristan Enaruna",
