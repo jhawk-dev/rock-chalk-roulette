@@ -1,0 +1,1202 @@
+<title>Rock Chalk Roulette</title>
+<style>
+  @font-face{
+    font-family:"Bebas";
+    src:url(data:font/woff2;base64,__BEBAS__) format("woff2");
+    font-weight:400; font-style:normal; font-display:swap;
+  }
+  @font-face{
+    font-family:"Spectral";
+    src:url(data:font/woff2;base64,__SPECTRAL400__) format("woff2");
+    font-weight:400; font-style:normal; font-display:swap;
+  }
+  @font-face{
+    font-family:"Spectral";
+    src:url(data:font/woff2;base64,__SPECTRAL400I__) format("woff2");
+    font-weight:400; font-style:italic; font-display:swap;
+  }
+  @font-face{
+    font-family:"Spectral";
+    src:url(data:font/woff2;base64,__SPECTRAL500__) format("woff2");
+    font-weight:500; font-style:normal; font-display:swap;
+  }
+  @font-face{
+    font-family:"Spectral";
+    src:url(data:font/woff2;base64,__SPECTRAL600__) format("woff2");
+    font-weight:600; font-style:normal; font-display:swap;
+  }
+  @font-face{
+    font-family:"JBMono";
+    src:url(data:font/woff2;base64,__JBMONO400__) format("woff2");
+    font-weight:400; font-style:normal; font-display:swap;
+  }
+  @font-face{
+    font-family:"JBMono";
+    src:url(data:font/woff2;base64,__JBMONO600__) format("woff2");
+    font-weight:600; font-style:normal; font-display:swap;
+  }
+  @font-face{
+    font-family:"JBMono";
+    src:url(data:font/woff2;base64,__JBMONO700__) format("woff2");
+    font-weight:700; font-style:normal; font-display:swap;
+  }
+
+  :root{
+    --ink:#1c1712;
+    --ink-soft:#4a4136;
+    --parchment:#e7dcbf;
+    --parchment-2:#dccda3;
+    --card:#f8f2e2;
+    --crimson:#c8102e;
+    --crimson-deep:#8f0a1f;
+    --navy:#0051ba;
+    --navy-soft:#4c86d6;
+    --gold:#a17c2e;
+    --gold-bright:#c99a3f;
+    --line:rgba(28,23,18,0.2);
+    --shadow:rgba(28,23,18,0.28);
+    --led-bg:#0d1a10;
+    --led-fg:#f5b942;
+    --led-dim:#5a4520;
+    --focus:#2c6fbb;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --ink:#f1e9d6;
+      --ink-soft:#c7bda3;
+      --parchment:#11141d;
+      --parchment-2:#171b27;
+      --card:#1b2030;
+      --crimson:#e8435b;
+      --crimson-deep:#b23347;
+      --navy:#4a8fe0;
+      --navy-soft:#7cb0ee;
+      --gold:#d8b169;
+      --gold-bright:#eecb8a;
+      --line:rgba(241,233,214,0.14);
+      --shadow:rgba(0,0,0,0.55);
+      --focus:#7fb3f0;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#f1e9d6;
+    --ink-soft:#c7bda3;
+    --parchment:#11141d;
+    --parchment-2:#171b27;
+    --card:#1b2030;
+    --crimson:#e8435b;
+    --crimson-deep:#b23347;
+    --navy:#4a8fe0;
+    --navy-soft:#7cb0ee;
+    --gold:#d8b169;
+    --gold-bright:#eecb8a;
+    --line:rgba(241,233,214,0.14);
+    --shadow:rgba(0,0,0,0.55);
+    --focus:#7fb3f0;
+  }
+  :root[data-theme="light"]{
+    --ink:#1c1712;
+    --ink-soft:#4a4136;
+    --parchment:#e7dcbf;
+    --parchment-2:#dccda3;
+    --card:#f8f2e2;
+    --crimson:#c8102e;
+    --crimson-deep:#8f0a1f;
+    --navy:#0051ba;
+    --navy-soft:#4c86d6;
+    --gold:#a17c2e;
+    --gold-bright:#c99a3f;
+    --line:rgba(28,23,18,0.2);
+    --shadow:rgba(28,23,18,0.28);
+    --focus:#2c6fbb;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      repeating-linear-gradient(180deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 1px, transparent 1px, transparent 3px),
+      var(--parchment);
+    color:var(--ink);
+    font-family:"Spectral", Georgia, serif;
+    font-size:17px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--gold); color:var(--navy); }
+  a{color:var(--crimson);}
+  :focus-visible{ outline:3px solid var(--focus); outline-offset:2px; }
+
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 20px 80px; }
+
+  /* ---------- HERO ---------- */
+  .hero{ padding:56px 0 28px; text-align:left; }
+  .eyebrow{
+    font-family:"JBMono", monospace;
+    font-size:12px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--crimson);
+    font-weight:600;
+    margin:0 0 14px;
+  }
+  h1.title{
+    font-family:"Bebas", "Arial Narrow", sans-serif;
+    font-weight:400;
+    font-size:clamp(46px, 9vw, 92px);
+    line-height:0.92;
+    letter-spacing:0.01em;
+    margin:0 0 18px;
+    color:var(--navy);
+    text-wrap:balance;
+  }
+  .dek{
+    font-size:19px;
+    font-style:italic;
+    max-width:62ch;
+    color:var(--ink-soft);
+    margin:0 0 20px;
+  }
+  .howto{
+    font-family:"JBMono", monospace;
+    font-size:13px;
+    color:var(--ink-soft);
+    border-left:3px solid var(--gold);
+    padding:8px 0 8px 14px;
+    max-width:62ch;
+  }
+  .howto b{ color:var(--ink); }
+
+  /* ---------- SCOREBOARD / TRACKER ---------- */
+  .tracker{
+    position:sticky; top:0; z-index:20;
+    background:var(--parchment);
+    padding:14px 0 12px;
+    border-bottom:1px solid var(--line);
+  }
+  .tracker-inner{
+    background:var(--led-bg);
+    border-radius:6px;
+    padding:14px 16px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:16px;
+    align-items:center;
+    box-shadow: inset 0 0 0 1px rgba(245,185,66,0.25), 0 6px 18px var(--shadow);
+  }
+  .slots{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+    flex:1 1 380px;
+  }
+  .slot{
+    font-family:"JBMono", monospace;
+    background:transparent;
+    border:1px solid var(--led-dim);
+    color:var(--led-fg);
+    border-radius:3px;
+    padding:5px 8px;
+    font-size:11px;
+    letter-spacing:0.02em;
+    display:inline-block;
+    text-align:left;
+    min-width:74px;
+    line-height:1.3;
+  }
+  .slot .pos-tag{ display:block; font-size:12px; font-weight:700; color:var(--led-fg); letter-spacing:0.04em; }
+  .slot .era-tag{ display:block; opacity:0.65; font-size:9px; text-transform:uppercase; letter-spacing:0.08em; min-height:11px; }
+  .slot .who{ display:block; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:120px; }
+  .slot.empty .who{ opacity:0.4; }
+  .tracker-stats{
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+    font-family:"JBMono", monospace;
+    color:var(--led-fg);
+    flex:0 0 auto;
+  }
+  .tstat{ text-align:center; min-width:52px; }
+  .tstat b{
+    display:block;
+    font-size:22px;
+    font-variant-numeric:tabular-nums;
+    line-height:1;
+  }
+  .tstat span{ font-size:9px; letter-spacing:0.08em; text-transform:uppercase; opacity:0.7; }
+  .tier{
+    font-family:"JBMono", monospace;
+    color:var(--led-fg);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    flex:1 1 100%;
+    border-top:1px dashed var(--led-dim);
+    padding-top:10px;
+    margin-top:2px;
+  }
+  .tier em{ font-style:normal; opacity:0.6; font-weight:400; }
+  .controls{
+    display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;
+  }
+  .btn{
+    font-family:"JBMono", monospace;
+    font-size:12px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    background:var(--card);
+    color:var(--ink);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:8px 14px;
+    cursor:pointer;
+  }
+  .btn:hover{ border-color:var(--crimson); color:var(--crimson); }
+  .btn.primary{ background:var(--crimson); color:#f8f2e2; border-color:var(--crimson-deep); }
+  .btn.primary:hover{ opacity:0.9; color:#f8f2e2; }
+
+  /* ---------- DECADE BANNER ---------- */
+  .banner{
+    display:inline-block;
+    background:var(--navy);
+    color:var(--parchment);
+    padding:14px 34px 14px 20px;
+    clip-path:polygon(0 0, 94% 0, 100% 50%, 94% 100%, 0 100%);
+    max-width:100%;
+    margin-bottom:20px;
+  }
+  .banner h2{
+    font-family:"Bebas", sans-serif;
+    font-weight:400;
+    font-size:clamp(26px, 4vw, 36px);
+    margin:0;
+    letter-spacing:0.01em;
+  }
+
+  /* ---------- CARDS ---------- */
+  .cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));
+    gap:14px;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:2px;
+    clip-path:polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+    padding:16px 16px 14px;
+    cursor:pointer;
+    text-align:left;
+    color:var(--ink);
+    position:relative;
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  @media (prefers-reduced-motion: reduce){ .card{ transition:none; } }
+  .card:hover{ transform:translateY(-3px); box-shadow:0 8px 20px var(--shadow); }
+  .card::before{
+    content:"";
+    position:absolute; top:0; left:0; right:16px; height:4px;
+    background:var(--gold);
+  }
+  .card.honor{ border-color:var(--gold-bright); }
+  .card.honor::before{ background:var(--gold-bright); height:6px; }
+  .honor-mark{
+    position:absolute; top:8px; right:8px;
+    color:var(--gold-bright); font-size:15px; line-height:1;
+  }
+  .card.disabled{
+    cursor:default;
+    opacity:0.45;
+  }
+  .card.disabled:hover{ transform:none; box-shadow:none; }
+  .card.disabled::before{ background:var(--line); }
+  .disabled-note{
+    font-family:"JBMono", monospace;
+    font-size:11px;
+    color:var(--crimson);
+    margin:8px 0 0;
+    font-style:normal;
+  }
+  .card-top{
+    display:flex; justify-content:space-between; align-items:flex-start; gap:8px;
+    margin-top:6px;
+  }
+  .name{ font-family:"Bebas", sans-serif; font-size:22px; letter-spacing:0.01em; line-height:1.05; }
+  .pos{
+    font-family:"JBMono", monospace;
+    font-size:11px;
+    font-weight:700;
+    background:var(--navy);
+    color:var(--parchment);
+    padding:2px 6px;
+    border-radius:2px;
+    white-space:nowrap;
+  }
+  .season{
+    font-family:"JBMono", monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-top:2px;
+  }
+  .statline{
+    display:flex; flex-wrap:wrap; gap:10px 16px;
+    margin:12px 0;
+    font-family:"JBMono", monospace;
+  }
+  .stat b{ font-size:19px; font-variant-numeric:tabular-nums; display:block; line-height:1.1; }
+  .stat span{ font-size:10px; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); }
+  .blurb{ font-size:14px; font-style:italic; color:var(--ink-soft); margin:0; }
+
+  /* ---------- DRAFT STAGE ---------- */
+  .stage{ margin-top:52px; }
+  .stage-head{
+    display:flex; justify-content:space-between; align-items:baseline;
+    flex-wrap:wrap; gap:8px; margin-bottom:16px;
+  }
+  .stage-head h2{
+    font-family:"Bebas", sans-serif; font-weight:400;
+    font-size:clamp(24px, 4vw, 32px); color:var(--navy); margin:0;
+  }
+  .skips-left{
+    font-family:"JBMono", monospace; font-size:12px; color:var(--ink-soft);
+    letter-spacing:0.03em;
+  }
+
+  .roster-board{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(120px, 1fr));
+    gap:8px;
+    margin:20px 0 0;
+  }
+  .roster-slot{
+    background:var(--card);
+    border:1px dashed var(--line);
+    border-radius:3px;
+    padding:8px 10px;
+    min-height:56px;
+  }
+  .roster-slot.filled{ border-style:solid; }
+  .roster-slot .rs-pos{
+    font-family:"JBMono", monospace; font-size:11px; font-weight:700;
+    color:var(--gold); letter-spacing:0.06em; text-transform:uppercase;
+  }
+  .roster-slot .rs-name{
+    font-family:"Bebas", sans-serif; font-size:19px; color:var(--navy);
+    margin-top:4px; line-height:1.05;
+  }
+  .roster-slot .rs-meta{
+    font-family:"JBMono", monospace; font-size:10px; color:var(--ink-soft);
+    text-transform:uppercase; letter-spacing:0.04em; margin-top:2px;
+  }
+  .roster-slot .rs-open{
+    font-family:"JBMono", monospace; font-size:12px; color:var(--ink-soft);
+    opacity:0.55; margin-top:10px; font-style:italic;
+  }
+  .rs-move{ margin-top:8px; display:flex; gap:6px; flex-wrap:wrap; }
+  .move-btn{
+    font-family:"JBMono", monospace; font-size:10px; text-transform:uppercase;
+    letter-spacing:0.04em; background:transparent; border:1px solid var(--gold);
+    color:var(--gold); border-radius:3px; padding:3px 8px; cursor:pointer;
+  }
+  .move-btn:hover{ background:var(--gold); color:var(--parchment); }
+
+  .machine{
+    background:var(--navy); color:var(--parchment);
+    border-radius:6px; padding:32px 24px; text-align:center;
+    clip-path:polygon(0 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%);
+  }
+  .machine p{
+    font-size:14px; font-style:italic; color:rgba(231,220,191,0.8);
+    max-width:46ch; margin:0 auto 18px;
+  }
+  .reel{
+    font-family:"JBMono", monospace; font-weight:700;
+    background:var(--led-bg); color:var(--led-fg);
+    border:1px solid rgba(245,185,66,0.3); border-radius:4px;
+    max-width:420px; margin:0 auto 20px; padding:20px 12px;
+  }
+  .reel .rl-main{ font-size:26px; letter-spacing:0.03em; }
+  .reel .rl-sub{ display:block; font-size:12px; letter-spacing:0.1em; opacity:0.7; margin-top:5px; }
+  .spin-btn{
+    font-family:"Bebas", sans-serif; font-size:22px; letter-spacing:0.03em;
+    background:var(--crimson); color:#f8f2e2; border:1px solid var(--crimson-deep);
+    border-radius:4px; padding:12px 44px; cursor:pointer;
+  }
+  .spin-btn:hover{ opacity:0.9; }
+  .spin-btn:disabled{ opacity:0.55; cursor:default; }
+
+  .landed-note{
+    font-size:14px; font-style:italic; color:var(--ink-soft);
+    margin:16px 0 18px; max-width:70ch;
+  }
+  .reroll-row{
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    margin:0 0 18px;
+  }
+  .reroll-row .note{ font-family:"JBMono", monospace; font-size:12px; color:var(--ink-soft); }
+
+  .draft-complete{ text-align:center; padding:36px 0 8px; }
+  .draft-complete h2{
+    font-family:"Bebas", sans-serif; font-weight:400;
+    font-size:clamp(32px, 6vw, 48px); color:var(--crimson); margin:0 0 8px;
+  }
+  .draft-complete p{
+    font-style:italic; color:var(--ink-soft); max-width:58ch;
+    margin:0 auto 20px;
+  }
+  .complete-actions{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+  .share-status{
+    font-family:"JBMono", monospace; font-style:normal; font-size:12px;
+    color:var(--ink-soft); min-height:16px; margin:10px 0 0;
+  }
+  .img-modal{
+    position:fixed; inset:0; z-index:100;
+    background:rgba(10,14,20,0.88);
+    display:flex; align-items:center; justify-content:center;
+    padding:24px; overflow:auto;
+  }
+  .img-modal-inner{
+    max-width:min(92vw, 480px); text-align:center;
+    display:flex; flex-direction:column; align-items:center; gap:14px;
+  }
+  .img-modal-hint{
+    font-family:"JBMono", monospace; font-size:13px; color:#f4ede0; margin:0;
+  }
+  .img-modal-inner img{
+    max-width:100%; max-height:70vh; border-radius:10px;
+    box-shadow:0 12px 32px rgba(0,0,0,0.5);
+  }
+
+  footer{
+    margin-top:64px;
+    padding-top:24px;
+    border-top:1px solid var(--line);
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  footer p{ max-width:74ch; margin:0 0 10px; }
+
+  @media (max-width:600px){
+    .hero{ padding-top:38px; }
+    .slot .who{ max-width:88px; }
+
+    /* A sticky tracker that wraps to several rows never scrolls out of the way —
+       on narrow screens it reads as "blocking" the game below it. Un-stick it and
+       shrink it so it's a normal, compact part of the page instead. */
+    .tracker{ position:static; padding:10px 0; }
+    .tracker-inner{ padding:10px 12px; gap:10px; }
+    .slots{ gap:4px; }
+    .slot{ min-width:64px; padding:4px 6px; }
+    .slot .era-tag{ display:none; }
+    .tracker-stats{ gap:10px; }
+    .tstat{ min-width:38px; }
+    .tstat b{ font-size:17px; }
+    .tier{ padding-top:6px; }
+    .tier em{ display:none; }
+    .controls{ margin-top:8px; }
+  }
+</style>
+
+<div class="wrap">
+  <div class="hero">
+    <p class="eyebrow">A roster that never existed</p>
+    <h1 class="title">Rock Chalk<br>Roulette</h1>
+    <p class="dek">Spin a season &mdash; a real KU team, top to bottom, not just the stars. Draft whoever's on the roster. Build a starting five from 1,167 real player-seasons, 1945 to 2026.</p>
+    <p class="howto">Two rerolls total. Multi-position players can move to open a spot for someone else.</p>
+  </div>
+
+  <div class="tracker">
+    <div class="tracker-inner">
+      <div class="slots" id="slots"></div>
+      <div class="tracker-stats" id="tstats"></div>
+      <div class="tier" id="tier"></div>
+    </div>
+    <div class="controls">
+      <button class="btn" id="clear">Clear roster</button>
+    </div>
+  </div>
+
+  <div id="eras"></div>
+
+  <footer>
+    <p>Stats are real per-season averages (or best-available career figures, marked † / ≈) from KU records and reporting. ★ marks a consensus All-American, National Player of the Year, or Final Four MOP season.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var ERAS = __ERA_DATA__;
+
+  var STORAGE_KEY = "ku-frankenstein-draft-v6";
+  // Five roster slots -- two Guards, two Forwards, one Center. Real KU rosters only
+  // tag players Guard/Forward/Center, so slots share a type rather than each being
+  // its own distinct position (no invented PG/SG or SF/PF split).
+  var POSITIONS = ["G1", "G2", "F1", "F2", "C"];
+  var SLOT_TYPE = { G1: "G", G2: "G", F1: "F", F2: "F", C: "C" };
+  var POSITION_NAMES = { G1: "Guard", G2: "Guard", F1: "Forward", F2: "Forward", C: "Center" };
+  var TOTAL_SKIPS = 2;
+
+  function fitsSlot(posEligible, slot){
+    return posEligible.indexOf(SLOT_TYPE[slot]) !== -1;
+  }
+
+  function emptyRoster(){
+    var r = {};
+    POSITIONS.forEach(function(p){ r[p] = null; });
+    return r;
+  }
+
+  function freshDraft(){
+    return {
+      roster: emptyRoster(),
+      currentEraId: null,
+      skipsLeft: TOTAL_SKIPS
+    };
+  }
+
+  var draft = freshDraft();
+  try{
+    var saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+    if(saved && saved.roster && POSITIONS.every(function(p){ return p in saved.roster; })){
+      draft = saved;
+    }
+  }catch(e){}
+
+  function save(){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(draft)); }catch(e){}
+  }
+
+  function fmt(n, decimals){
+    if(n === undefined || n === null) return null;
+    return n.toFixed(decimals === undefined ? 1 : decimals);
+  }
+
+  function statHTML(c){
+    var out = "";
+    function add(label, val, approx){
+      if(val === undefined || val === null) return;
+      out += '<div class="stat"><b>' + (approx ? "≈" : "") + val + '</b><span>' + label + '</span></div>';
+    }
+    add("PPG", fmt(c.ppg), c.approxPpg);
+    add("RPG", fmt(c.rpg), c.approxRpg);
+    add("APG", fmt(c.apg), c.approxApg);
+    add("SPG", fmt(c.spg), c.approxSpg);
+    add("BPG", fmt(c.bpg), c.approxBpg);
+    if(c.fg) add("FG%", c.fg, c.approxFg);
+    if(c.tp) add("3P%", c.tp, false);
+    if(c.ft) add("FT%", c.ft, false);
+    return out;
+  }
+
+  function eraById(id){
+    for(var i = 0; i < ERAS.length; i++){ if(ERAS[i].id === id) return ERAS[i]; }
+    return null;
+  }
+
+  var NAME_SUFFIXES = ["jr.", "jr", "sr.", "sr", "ii", "iii", "iv", "v"];
+  function lastName(fullName){
+    var parts = fullName.split(" ");
+    while(parts.length > 1 && NAME_SUFFIXES.indexOf(parts[parts.length - 1].toLowerCase()) !== -1){
+      parts.pop();
+    }
+    return parts[parts.length - 1];
+  }
+
+  function reducedMotion(){
+    return matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+
+  function openSlots(){
+    return POSITIONS.filter(function(p){ return draft.roster[p] === null; });
+  }
+
+  function draftedCount(){
+    return POSITIONS.length - openSlots().length;
+  }
+
+  function usedEraIds(){
+    var set = {};
+    POSITIONS.forEach(function(p){ var o = draft.roster[p]; if(o) set[o.eraId] = true; });
+    return set;
+  }
+
+  function usedCandidateKeys(){
+    var set = {};
+    POSITIONS.forEach(function(p){ var o = draft.roster[p]; if(o) set[o.eraId + "|" + o.idx] = true; });
+    return set;
+  }
+
+  // Same real person can't fill two slots, even from a different season.
+  function usedNames(){
+    var set = {};
+    POSITIONS.forEach(function(p){
+      var o = draft.roster[p];
+      if(o) set[eraById(o.eraId).candidates[o.idx].name] = true;
+    });
+    return set;
+  }
+
+  function cardHTML(c, i, disabledReason){
+    var disabled = !!disabledReason;
+    var cls = "card" + (disabled ? " disabled" : "") + (c.honor ? " honor" : "");
+    var html = '<button type="button" class="' + cls + '"' + (disabled ? ' disabled' : '') + ' data-idx="' + i + '">';
+    if(c.honor) html += '<span class="honor-mark" title="Consensus All-American, National Player of the Year, or Final Four MOP">&#9733;</span>';
+    html += '<div class="card-top"><div><div class="name">' + c.name + '</div>' +
+      '<div class="season">' + c.season + (c.classYear ? " &middot; " + c.classYear : "") + (c.footnote ? " †" : "") + '</div></div>' +
+      '<div class="pos">' + c.pos + '</div></div>';
+    html += '<div class="statline">' + statHTML(c) + '</div>';
+    html += '<p class="blurb">' + c.blurb + '</p>';
+    if(disabled) html += '<p class="disabled-note">' + disabledReason + '</p>';
+    html += '</button>';
+    return html;
+  }
+
+  // Assigns to the first open slot (in G/F/C order) the candidate is eligible
+  // for. If they're eligible for more than one open slot, "move" lets you shuffle them
+  // to the other one afterward — no need to choose up front.
+  function pickCandidate(idx){
+    if(draft.currentEraId === null) return;
+    var era = eraById(draft.currentEraId);
+    var c = era.candidates[idx];
+    if(usedNames()[c.name]) return;
+    var slots = openSlots();
+    var target = slots.filter(function(s){ return fitsSlot(c.posEligible, s); })[0];
+    if(!target) return;
+    draft.roster[target] = { eraId: era.id, idx: idx };
+    draft.currentEraId = null;
+    save();
+    renderAll();
+  }
+
+  function moveCandidate(fromSlot, toSlot){
+    var occupant = draft.roster[fromSlot];
+    if(!occupant || draft.roster[toSlot] !== null) return;
+    var era = eraById(occupant.eraId);
+    var c = era.candidates[occupant.idx];
+    if(!fitsSlot(c.posEligible, toSlot)) return;
+    draft.roster[fromSlot] = null;
+    draft.roster[toSlot] = occupant;
+    save();
+    renderAll();
+  }
+
+  function eraHasOpenCandidate(era, slots, usedKeys, usedNames){
+    for(var i = 0; i < era.candidates.length; i++){
+      if(usedKeys[era.id + "|" + i]) continue;
+      if(usedNames[era.candidates[i].name]) continue;
+      if(slots.some(function(s){ return fitsSlot(era.candidates[i].posEligible, s); })) return true;
+    }
+    return false;
+  }
+
+  function eligibleEras(slots, usedKeys, usedNames, excludeEraId){
+    return ERAS.filter(function(era){
+      return era.id !== excludeEraId && eraHasOpenCandidate(era, slots, usedKeys, usedNames);
+    });
+  }
+
+  // Spins for whichever slots are still open. Prefers a season not already on the
+  // roster (so the picks span different seasons), but falls back to reusing one if
+  // that's the only way to fill what's left.
+  function spin(excludeEraId, cb){
+    var slots = openSlots();
+    var usedKeys = usedCandidateKeys();
+    var names = usedNames();
+    var used = usedEraIds();
+
+    var fresh = eligibleEras(slots, usedKeys, names, excludeEraId).filter(function(era){ return !used[era.id]; });
+    var candidates = fresh.length ? fresh : eligibleEras(slots, usedKeys, names, excludeEraId);
+    if(!candidates.length) candidates = eligibleEras(slots, usedKeys, names, null);
+    if(!candidates.length) return;
+
+    var era = candidates[Math.floor(Math.random() * candidates.length)];
+    draft.currentEraId = era.id;
+    save();
+    if(cb) cb();
+  }
+
+  function runSpinAnimation(btn, excludeEraId){
+    btn.disabled = true;
+    var reelMain = document.getElementById("reelMain");
+    var reelSub = document.getElementById("reelSub");
+    if(reducedMotion() || !reelMain){
+      spin(excludeEraId, renderAll);
+      return;
+    }
+    var delays = [55, 55, 70, 70, 90, 100, 120, 150, 190, 240, 300, 370];
+    var step = 0;
+    function tick(){
+      var random = ERAS[Math.floor(Math.random() * ERAS.length)];
+      reelMain.textContent = random.decade;
+      reelSub.textContent = random.candidates.length + " players on file";
+      step++;
+      if(step < delays.length){
+        setTimeout(tick, delays[step]);
+      } else {
+        spin(excludeEraId, renderAll);
+      }
+    }
+    tick();
+  }
+
+  var lastDiscardedEraId = null;
+
+  function rerollRound(){
+    if(draft.skipsLeft <= 0) return;
+    if(draft.currentEraId === null) return;
+    lastDiscardedEraId = draft.currentEraId;
+    draft.currentEraId = null;
+    draft.skipsLeft--;
+    save();
+    renderAll();
+  }
+
+  function rosterBoardHTML(){
+    var slots = openSlots();
+    var html = '<div class="roster-board">';
+    POSITIONS.forEach(function(pos){
+      var occupant = draft.roster[pos];
+      html += '<div class="roster-slot' + (occupant ? ' filled' : '') + '">';
+      html += '<div class="rs-pos">' + POSITION_NAMES[pos] + '</div>';
+      if(occupant){
+        var era = eraById(occupant.eraId);
+        var c = era.candidates[occupant.idx];
+        html += '<div class="rs-name">' + c.name + '</div>';
+        html += '<div class="rs-meta">' + c.season + (c.classYear ? ' &middot; ' + c.classYear : '') + (c.footnote ? " †" : "") + '</div>';
+        var moveTargets = slots.filter(function(s){ return s !== pos && fitsSlot(c.posEligible, s); });
+        var moveTargetsByType = {};
+        moveTargets.forEach(function(s){ if(!moveTargetsByType[SLOT_TYPE[s]]) moveTargetsByType[SLOT_TYPE[s]] = s; });
+        var dedupedTargets = Object.keys(moveTargetsByType).map(function(t){ return moveTargetsByType[t]; });
+        if(dedupedTargets.length){
+          html += '<div class="rs-move">';
+          dedupedTargets.forEach(function(t){
+            html += '<button type="button" class="move-btn" data-from="' + pos + '" data-to="' + t + '">Move to ' + POSITION_NAMES[t] + '</button>';
+          });
+          html += '</div>';
+        }
+      } else {
+        html += '<div class="rs-open">open</div>';
+      }
+      html += '</div>';
+    });
+    html += '</div>';
+    return html;
+  }
+
+  function wireRosterBoard(el){
+    Array.prototype.forEach.call(el.querySelectorAll(".move-btn"), function(btn){
+      btn.addEventListener("click", function(){
+        moveCandidate(btn.getAttribute("data-from"), btn.getAttribute("data-to"));
+      });
+    });
+  }
+
+  function renderStage(){
+    var el = document.getElementById("eras");
+    var slots = openSlots();
+    var html = "";
+
+    if(slots.length === 0){
+      html += '<div class="draft-complete">' +
+        '<h2>Draft complete</h2>' +
+        '<div class="complete-actions">' +
+        '<button type="button" class="btn primary" id="playAgain">Play again</button>' +
+        '<button type="button" class="btn" id="shareBtn">Share roster</button>' +
+        '</div>' +
+        '<p class="share-status" id="shareStatus" aria-live="polite"></p>' +
+        '</div>';
+      html += rosterBoardHTML();
+      el.innerHTML = html;
+      wireRosterBoard(el);
+      var pa = document.getElementById("playAgain");
+      if(pa) pa.addEventListener("click", function(){
+        draft = freshDraft();
+        save();
+        renderAll();
+      });
+      var sb = document.getElementById("shareBtn");
+      if(sb) sb.addEventListener("click", shareRosterImage);
+      return;
+    }
+
+    var stillNeed = slots.map(function(p){ return POSITION_NAMES[p]; }).join(", ");
+    html += '<section class="stage" id="stage-active">';
+    html += '<div class="stage-head"><h2>Round ' + (draftedCount() + 1) + ' of ' + POSITIONS.length + '</h2>' +
+      '<span class="skips-left">' + draft.skipsLeft + ' reroll' + (draft.skipsLeft === 1 ? "" : "s") + ' left</span></div>';
+
+    if(draft.currentEraId === null){
+      html += '<div class="machine"><p>Still need: <b>' + stillNeed + '</b></p>' +
+        '<div class="reel"><span class="rl-main" id="reelMain">&mdash;</span><span class="rl-sub" id="reelSub">spin for a season</span></div>' +
+        '<button type="button" class="spin-btn" id="spinBtn">Spin</button></div>';
+    } else {
+      var era = eraById(draft.currentEraId);
+      var usedKeys = usedCandidateKeys();
+      var names = usedNames();
+      html += '<div class="banner"><h2>' + era.decade + '</h2></div>';
+      html += '<div class="reroll-row">';
+      if(draft.skipsLeft > 0){
+        html += '<button type="button" class="btn" id="rerollBtn">Reroll this season</button>';
+      } else {
+        html += '<span class="note">No rerolls left.</span>';
+      }
+      html += '</div>';
+      html += '<div class="cards">';
+      era.candidates.forEach(function(c, i){
+        if(usedKeys[era.id + "|" + i]) return;
+        if(names[c.name]){
+          html += cardHTML(c, i, "Already on your roster.");
+          return;
+        }
+        var fits = slots.some(function(s){ return fitsSlot(c.posEligible, s); });
+        html += cardHTML(c, i, fits ? null : "No open spot.");
+      });
+      html += '</div>';
+    }
+    html += '</section>';
+    html += rosterBoardHTML();
+
+    el.innerHTML = html;
+    wireRosterBoard(el);
+
+    var spinBtn = document.getElementById("spinBtn");
+    if(spinBtn) spinBtn.addEventListener("click", function(){
+      var exclude = lastDiscardedEraId;
+      lastDiscardedEraId = null;
+      runSpinAnimation(spinBtn, exclude);
+    });
+
+    var rerollBtn = document.getElementById("rerollBtn");
+    if(rerollBtn) rerollBtn.addEventListener("click", rerollRound);
+
+    Array.prototype.forEach.call(el.querySelectorAll("#stage-active .cards .card:not(.disabled)"), function(btn){
+      btn.addEventListener("click", function(){
+        pickCandidate(parseInt(btn.getAttribute("data-idx"), 10));
+      });
+    });
+  }
+
+  // Shared by the on-page tracker and the share-image renderer.
+  function computeSummary(){
+    var sums = { ppg:0, rpg:0, apg:0, spg:0, bpg:0, fgTotal:0, fgCount:0 };
+    var picked = draftedCount();
+
+    POSITIONS.forEach(function(pos){
+      var occupant = draft.roster[pos];
+      if(!occupant) return;
+      var era = eraById(occupant.eraId);
+      var c = era.candidates[occupant.idx];
+      sums.ppg += c.ppg || 0;
+      sums.rpg += c.rpg || 0;
+      sums.apg += c.apg || 0;
+      sums.spg += c.spg || 0;
+      sums.bpg += c.bpg || 0;
+      if(c.fg){ sums.fgTotal += parseFloat(c.fg); sums.fgCount++; }
+    });
+    var fgAvg = sums.fgCount ? (sums.fgTotal / sums.fgCount) : null;
+
+    var tierLabel, tierDetail;
+    if(picked === 0){
+      tierLabel = "Empty bench"; tierDetail = "spin the lever below to get started.";
+    } else if(picked < 5){
+      tierLabel = picked + " of " + POSITIONS.length + " drafted"; tierDetail = "keep spinning to fill out the roster.";
+    } else {
+      // Core score is points + rebounds — the two stats reliably recorded across all
+      // eight decades. Assists/steals/blocks weren't official NCAA stats until the
+      // mid-1980s, so a 1950s-1970s roster can't rack them up no matter how good it
+      // was; rather than let that drag the tier down, elite combined steals+blocks
+      // only ever pushes a tier UP, never down, and rosters with none simply get no
+      // bonus instead of a penalty.
+      var core = sums.ppg + sums.rpg;
+      var tiers = [
+        { max: 90, label: "Bubble team", detail: "a fine five, but not one that's cutting down nets." },
+        { max: 100, label: "First-weekend exit", detail: "tournament-worthy, but this group drops a few it shouldn't." },
+        { max: 110, label: "Elite Eight", detail: "Allen Fieldhouse is rocking every single night with this group." },
+        { max: 118, label: "Final Four", detail: "one of the best five-man cores in program history." },
+        { max: Infinity, label: "National champions", detail: "nobody in the country touches this team." }
+      ];
+      var tierIndex = 0;
+      while(tierIndex < tiers.length - 1 && core >= tiers[tierIndex].max) tierIndex++;
+
+      var defense = sums.spg + sums.bpg;
+      var eliteDefense = defense >= 8;
+      var bumped = false;
+      if(eliteDefense && tierIndex < tiers.length - 1){ tierIndex++; bumped = true; }
+
+      tierLabel = tiers[tierIndex].label;
+      tierDetail = tiers[tierIndex].detail;
+      if(bumped){
+        tierDetail += " A combined " + defense.toFixed(1) + " steals and blocks bumped this group up a tier.";
+      } else if(eliteDefense){
+        tierDetail += " It defends at an elite level, too — " + defense.toFixed(1) + " combined steals and blocks.";
+      }
+    }
+    return { sums: sums, fgAvg: fgAvg, picked: picked, tierLabel: tierLabel, tierDetail: tierDetail };
+  }
+
+  function renderTracker(){
+    var slotsHTML = "";
+    POSITIONS.forEach(function(pos){
+      var occupant = draft.roster[pos];
+      var era = occupant ? eraById(occupant.eraId) : null;
+      var c = occupant ? era.candidates[occupant.idx] : null;
+      var tag = era ? era.decade : "";
+      var who = c ? (lastName(c.name) + " ’" + c.season.slice(-2)) : "on deck";
+      slotsHTML += '<span class="slot' + (c ? '' : ' empty') + '">' +
+        '<span class="pos-tag">' + SLOT_TYPE[pos] + '</span>' +
+        '<span class="era-tag">' + tag + '</span><span class="who">' + who + '</span></span>';
+    });
+    document.getElementById("slots").innerHTML = slotsHTML;
+
+    var summary = computeSummary();
+    var sums = summary.sums;
+    var statsHTML =
+      '<div class="tstat"><b>' + sums.ppg.toFixed(0) + '</b><span>Pts</span></div>' +
+      '<div class="tstat"><b>' + sums.rpg.toFixed(0) + '</b><span>Reb</span></div>' +
+      '<div class="tstat"><b>' + sums.apg.toFixed(0) + '</b><span>Ast</span></div>' +
+      '<div class="tstat"><b>' + sums.spg.toFixed(1) + '</b><span>Stl</span></div>' +
+      '<div class="tstat"><b>' + sums.bpg.toFixed(1) + '</b><span>Blk</span></div>' +
+      (summary.fgAvg ? '<div class="tstat"><b>' + summary.fgAvg.toFixed(0) + '%</b><span>FG avg</span></div>' : '');
+    document.getElementById("tstats").innerHTML = statsHTML;
+    document.getElementById("tier").innerHTML = summary.tierLabel + " — <em>" + summary.tierDetail + "</em>";
+  }
+
+  function renderAll(){ renderStage(); renderTracker(); }
+
+  function wrapLines(ctx, text, maxWidth){
+    var words = text.split(" ");
+    var lines = [];
+    var line = "";
+    for(var i = 0; i < words.length; i++){
+      var test = line ? line + " " + words[i] : words[i];
+      if(ctx.measureText(test).width > maxWidth && line){
+        lines.push(line);
+        line = words[i];
+      } else {
+        line = test;
+      }
+    }
+    if(line) lines.push(line);
+    return lines;
+  }
+
+  function roundRect(ctx, x, y, w, h, r){
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  function drawRosterCanvas(){
+    var W = 1080, H = 1350;
+    var canvas = document.createElement("canvas");
+    canvas.width = W; canvas.height = H;
+    var ctx = canvas.getContext("2d");
+
+    var navy = "#0d1b2e", navyLine = "rgba(255,255,255,0.14)";
+    var gold = "#f5b942", crimson = "#e8435b", blue = "#4c86d6", white = "#f4ede0", soft = "#b9c2cf";
+
+    var grad = ctx.createLinearGradient(0, 0, 0, H);
+    grad.addColorStop(0, "#122238");
+    grad.addColorStop(1, navy);
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = crimson;
+    ctx.fillRect(0, 0, W, 10);
+
+    ctx.textAlign = "center";
+    ctx.fillStyle = gold;
+    ctx.font = "600 24px JBMono, monospace";
+    ctx.fillText("A ROSTER THAT NEVER EXISTED", W / 2, 78);
+
+    ctx.fillStyle = white;
+    ctx.font = "400 84px Bebas, sans-serif";
+    ctx.fillText("ROCK CHALK ROULETTE", W / 2, 168);
+
+    var summary = computeSummary();
+    var sums = summary.sums;
+
+    ctx.fillStyle = crimson;
+    ctx.font = "400 66px Bebas, sans-serif";
+    ctx.fillText(summary.tierLabel.toUpperCase(), W / 2, 260);
+
+    ctx.fillStyle = soft;
+    ctx.font = "italic 400 26px Spectral, Georgia, serif";
+    var detailLines = wrapLines(ctx, summary.tierDetail, W - 160);
+    detailLines.slice(0, 2).forEach(function(line, i){
+      ctx.fillText(line, W / 2, 300 + i * 34);
+    });
+
+    var rowTop = 400, rowH = 138, rowGap = 16;
+    ctx.textAlign = "left";
+    POSITIONS.forEach(function(pos, i){
+      var y = rowTop + i * (rowH + rowGap);
+      var occupant = draft.roster[pos];
+      var era = occupant ? eraById(occupant.eraId) : null;
+      var c = occupant ? era.candidates[occupant.idx] : null;
+
+      ctx.fillStyle = "rgba(255,255,255,0.05)";
+      roundRect(ctx, 60, y, W - 120, rowH, 14);
+      ctx.fill();
+      ctx.strokeStyle = navyLine;
+      ctx.lineWidth = 1;
+      roundRect(ctx, 60, y, W - 120, rowH, 14);
+      ctx.stroke();
+
+      // position pill
+      ctx.fillStyle = c && c.honor ? gold : blue;
+      roundRect(ctx, 84, y + rowH / 2 - 34, 68, 68, 12);
+      ctx.fill();
+      ctx.fillStyle = navy;
+      ctx.textAlign = "center";
+      ctx.font = "600 30px JBMono, monospace";
+      ctx.fillText(SLOT_TYPE[pos], 84 + 34, y + rowH / 2 + 11);
+      ctx.textAlign = "left";
+
+      if(c){
+        ctx.fillStyle = white;
+        ctx.font = "600 40px Spectral, Georgia, serif";
+        var nameLine = c.name + (c.honor ? "  ★" : "");
+        ctx.fillText(nameLine, 176, y + 54);
+
+        ctx.fillStyle = soft;
+        ctx.font = "400 24px JBMono, monospace";
+        ctx.fillText(c.season + (c.classYear ? "  ·  " + c.classYear : ""), 176, y + 92);
+
+        var statBits = [];
+        if(c.ppg != null) statBits.push(c.ppg.toFixed(1) + " PPG");
+        if(c.rpg != null) statBits.push(c.rpg.toFixed(1) + " RPG");
+        if(c.apg != null) statBits.push(c.apg.toFixed(1) + " APG");
+        ctx.fillStyle = gold;
+        ctx.font = "600 28px JBMono, monospace";
+        ctx.textAlign = "right";
+        ctx.fillText(statBits.join("   "), W - 96, y + rowH / 2 + 10);
+        ctx.textAlign = "left";
+      } else {
+        ctx.fillStyle = soft;
+        ctx.font = "italic 400 30px Spectral, Georgia, serif";
+        ctx.fillText("open", 176, y + rowH / 2 + 10);
+      }
+    });
+
+    var barY = rowTop + POSITIONS.length * (rowH + rowGap) + 30;
+    var stats = [
+      [sums.ppg.toFixed(0), "PTS"],
+      [sums.rpg.toFixed(0), "REB"],
+      [sums.apg.toFixed(0), "AST"],
+      [sums.spg.toFixed(1), "STL"],
+      [sums.bpg.toFixed(1), "BLK"],
+      [summary.fgAvg ? summary.fgAvg.toFixed(0) + "%" : "—", "FG"]
+    ];
+    var colW = (W - 120) / stats.length;
+    ctx.textAlign = "center";
+    stats.forEach(function(s, i){
+      var cx = 60 + colW * i + colW / 2;
+      ctx.fillStyle = gold;
+      ctx.font = "600 46px JBMono, monospace";
+      ctx.fillText(s[0], cx, barY + 46);
+      ctx.fillStyle = soft;
+      ctx.font = "600 18px JBMono, monospace";
+      ctx.fillText(s[1], cx, barY + 76);
+    });
+
+    ctx.fillStyle = "rgba(255,255,255,0.12)";
+    ctx.font = "600 26px JBMono, monospace";
+    ctx.fillText("ROCK CHALK ROULETTE", W / 2, H - 40);
+
+    return canvas;
+  }
+
+  function dataURLToBlob(dataURL){
+    var parts = dataURL.split(",");
+    var mime = parts[0].match(/:(.*?);/)[1];
+    var bytes = atob(parts[1]);
+    var arr = new Uint8Array(bytes.length);
+    for(var i = 0; i < bytes.length; i++) arr[i] = bytes.charCodeAt(i);
+    return new Blob([arr], { type: mime });
+  }
+
+  // This page runs inside a sandboxed viewer frame (Claude's artifact host), which
+  // doesn't grant the "web-share" permission real sites get -- so navigator.share()
+  // is either absent or silently a no-op here even though this is otherwise the
+  // right way to summon a native share sheet. Where it IS available (opened as a
+  // standalone file, or a host that does grant it), iOS/WebKit only honors it as a
+  // genuine user action when called synchronously from the click -- crossing an
+  // async boundary first (a .then() after a callback-based API, a setTimeout, etc.)
+  // silently strips that. So this builds the canvas and encodes it via the
+  // synchronous toDataURL() (not the async toBlob()) and tries share() immediately,
+  // no awaited work first. When that's not available, window.claude.downloads is
+  // the platform's actual bridge for getting a file out of this sandboxed frame
+  // reliably (shows the viewer's own save confirmation); a plain <a download> click
+  // is the last-resort fallback for when neither exists (e.g. the saved HTML file
+  // opened directly, outside any host frame).
+  function shareRosterImage(){
+    var statusEl = document.getElementById("shareStatus");
+    var setStatus = function(msg){ if(statusEl) statusEl.textContent = msg; };
+
+    var canvas = drawRosterCanvas();
+    var dataURL = canvas.toDataURL("image/png");
+    var blob = dataURLToBlob(dataURL);
+    var fileName = "rock-chalk-roulette.png";
+    var file = (typeof File !== "undefined") ? new File([blob], fileName, { type: "image/png" }) : null;
+
+    if(navigator.share && navigator.canShare && file && navigator.canShare({ files: [file] })){
+      setStatus("");
+      navigator.share({ files: [file], title: "Rock Chalk Roulette" }).then(function(){
+        setStatus("Shared!");
+      }).catch(function(err){
+        if(err && err.name === "AbortError"){ setStatus(""); return; }
+        saveViaPlatformOrModal(blob, dataURL, fileName, setStatus);
+      });
+    } else {
+      saveViaPlatformOrModal(blob, dataURL, fileName, setStatus);
+    }
+  }
+
+  function saveViaPlatformOrModal(blob, dataURL, fileName, setStatus){
+    if(window.claude && window.claude.downloads){
+      setStatus("Saving…");
+      window.claude.downloads.save({ filename: fileName, data: blob }).then(function(){
+        setStatus("Saved — find it in your downloads to text or share.");
+      }).catch(function(err){
+        if(err && err.code === "declined"){ setStatus(""); return; }
+        showImageModal(dataURL);
+        setStatus("");
+      });
+      return;
+    }
+    // No reliable script-triggered download exists inside this sandboxed frame (a
+    // plain <a download> click on a blob URL is silently unreliable in Safari here).
+    // Showing the image directly and letting the user long-press it is a native
+    // browser gesture that doesn't depend on any of that working.
+    showImageModal(dataURL);
+    setStatus("");
+  }
+
+  function showImageModal(dataURL){
+    var overlay = document.createElement("div");
+    overlay.className = "img-modal";
+    overlay.innerHTML =
+      '<div class="img-modal-inner">' +
+        '<p class="img-modal-hint">Press and hold the image to save or share it.</p>' +
+        '<img src="' + dataURL + '" alt="Rock Chalk Roulette roster card">' +
+        '<button type="button" class="btn" id="imgModalClose">Close</button>' +
+      '</div>';
+    document.body.appendChild(overlay);
+    function close(){ overlay.remove(); }
+    overlay.addEventListener("click", function(e){ if(e.target === overlay) close(); });
+    document.getElementById("imgModalClose").addEventListener("click", close);
+  }
+
+  document.getElementById("clear").addEventListener("click", function(){
+    draft = freshDraft();
+    save();
+    renderAll();
+  });
+
+  renderAll();
+})();
+</script>
