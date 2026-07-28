@@ -926,6 +926,7 @@
       var defense = sums.spg + sums.bpg;
       var eliteDefense = defense >= 8;
       var veteranRoster = veteranCount >= 4;
+      var elitePlaymaking = sums.apg >= 9;
 
       var bonusNotes = [];
       var score = core;
@@ -936,6 +937,10 @@
       if(veteranRoster){
         score += 8;
         bonusNotes.push("This is also a battle-tested, experienced roster.");
+      }
+      if(elitePlaymaking){
+        score += 4;
+        bonusNotes.push("And it shares the ball — " + sums.apg.toFixed(1) + " combined assists.");
       }
 
       var tiers = [
