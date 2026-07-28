@@ -892,6 +892,7 @@
   function computeSummary(){
     var sums = { ppg:0, rpg:0, apg:0, spg:0, bpg:0, fgTotal:0, fgCount:0 };
     var picked = draftedCount();
+    var veteranCount = 0;
 
     POSITIONS.forEach(function(pos){
       var occupant = draft.roster[pos];
@@ -904,6 +905,7 @@
       sums.spg += c.spg || 0;
       sums.bpg += c.bpg || 0;
       if(c.fg){ sums.fgTotal += parseFloat(c.fg); sums.fgCount++; }
+      if(c.classYear && c.classYear !== "Freshman" && c.classYear !== "Sophomore") veteranCount++;
     });
     var fgAvg = sums.fgCount ? (sums.fgTotal / sums.fgCount) : null;
 
@@ -923,8 +925,10 @@
       var tiers = [
         { max: 90, label: "Bubble team", detail: "a fine five, but not one that's cutting down nets." },
         { max: 100, label: "First-weekend exit", detail: "tournament-worthy, but this group drops a few it shouldn't." },
+        { max: 105, label: "Sweet 16", detail: "a confident first-weekend run that finally meets its match in the second." },
         { max: 110, label: "Elite Eight", detail: "Allen Fieldhouse is rocking every single night with this group." },
-        { max: 118, label: "Final Four", detail: "one of the best five-man cores in program history." },
+        { max: 120, label: "Final Four", detail: "one of the best five-man cores in program history." },
+        { max: 125, label: "National runner-up", detail: "the best team in the country that didn't cut down the last net." },
         { max: Infinity, label: "National champions", detail: "nobody in the country touches this team." }
       ];
       var tierIndex = 0;
@@ -932,16 +936,28 @@
 
       var defense = sums.spg + sums.bpg;
       var eliteDefense = defense >= 8;
-      var bumped = false;
-      if(eliteDefense && tierIndex < tiers.length - 1){ tierIndex++; bumped = true; }
+      var bonusNotes = [];
+      if(eliteDefense && tierIndex < tiers.length - 1){
+        tierIndex++;
+        bonusNotes.push("A combined " + defense.toFixed(1) + " steals and blocks bumped this group up a tier.");
+      } else if(eliteDefense){
+        bonusNotes.push("It defends at an elite level, too — " + defense.toFixed(1) + " combined steals and blocks.");
+      }
+
+      // A veteran-heavy roster (4-5 of 5 starters Junior or older) gets the same
+      // one-tier, never-penalized treatment as the defense bonus -- experience
+      // only ever helps here, an all-freshman five is never docked for it.
+      var veteranRoster = veteranCount >= 4;
+      if(veteranRoster && tierIndex < tiers.length - 1){
+        tierIndex++;
+        bonusNotes.push("Four or five starters with real college mileage bumped this group up another tier.");
+      } else if(veteranRoster){
+        bonusNotes.push("This is also a battle-tested, experienced roster.");
+      }
 
       tierLabel = tiers[tierIndex].label;
       tierDetail = tiers[tierIndex].detail;
-      if(bumped){
-        tierDetail += " A combined " + defense.toFixed(1) + " steals and blocks bumped this group up a tier.";
-      } else if(eliteDefense){
-        tierDetail += " It defends at an elite level, too — " + defense.toFixed(1) + " combined steals and blocks.";
-      }
+      bonusNotes.forEach(function(note){ tierDetail += " " + note; });
     }
     return { sums: sums, fgAvg: fgAvg, picked: picked, tierLabel: tierLabel, tierDetail: tierDetail };
   }
@@ -1081,7 +1097,6 @@
         var statBits = [];
         if(c.ppg != null) statBits.push(c.ppg.toFixed(1) + " PPG");
         if(c.rpg != null) statBits.push(c.rpg.toFixed(1) + " RPG");
-        if(c.apg != null) statBits.push(c.apg.toFixed(1) + " APG");
         ctx.fillStyle = gold;
         ctx.font = "600 28px JBMono, monospace";
         ctx.textAlign = "right";
