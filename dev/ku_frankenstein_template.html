@@ -918,10 +918,26 @@
       // Core score is points + rebounds — the two stats reliably recorded across all
       // eight decades. Assists/steals/blocks weren't official NCAA stats until the
       // mid-1980s, so a 1950s-1970s roster can't rack them up no matter how good it
-      // was; rather than let that drag the tier down, elite combined steals+blocks
-      // only ever pushes a tier UP, never down, and rosters with none simply get no
-      // bonus instead of a penalty.
+      // was; rather than let that drag the score down, defense/experience bonuses
+      // only ever ADD points, never subtract, and rosters with neither simply get
+      // no bonus instead of a penalty.
       var core = sums.ppg + sums.rpg;
+
+      var defense = sums.spg + sums.bpg;
+      var eliteDefense = defense >= 8;
+      var veteranRoster = veteranCount >= 4;
+
+      var bonusNotes = [];
+      var score = core;
+      if(eliteDefense){
+        score += 8;
+        bonusNotes.push("It defends at an elite level, too — " + defense.toFixed(1) + " combined steals and blocks.");
+      }
+      if(veteranRoster){
+        score += 8;
+        bonusNotes.push("This is also a battle-tested, experienced roster.");
+      }
+
       var tiers = [
         { max: 90, label: "Bubble team", detail: "a fine five, but not one that's cutting down nets." },
         { max: 100, label: "First-weekend exit", detail: "tournament-worthy, but this group drops a few it shouldn't." },
@@ -932,28 +948,7 @@
         { max: Infinity, label: "National champions", detail: "nobody in the country touches this team." }
       ];
       var tierIndex = 0;
-      while(tierIndex < tiers.length - 1 && core >= tiers[tierIndex].max) tierIndex++;
-
-      var defense = sums.spg + sums.bpg;
-      var eliteDefense = defense >= 8;
-      var bonusNotes = [];
-      if(eliteDefense && tierIndex < tiers.length - 1){
-        tierIndex++;
-        bonusNotes.push("A combined " + defense.toFixed(1) + " steals and blocks bumped this group up a tier.");
-      } else if(eliteDefense){
-        bonusNotes.push("It defends at an elite level, too — " + defense.toFixed(1) + " combined steals and blocks.");
-      }
-
-      // A veteran-heavy roster (4-5 of 5 starters Junior or older) gets the same
-      // one-tier, never-penalized treatment as the defense bonus -- experience
-      // only ever helps here, an all-freshman five is never docked for it.
-      var veteranRoster = veteranCount >= 4;
-      if(veteranRoster && tierIndex < tiers.length - 1){
-        tierIndex++;
-        bonusNotes.push("Four or five starters with real college mileage bumped this group up another tier.");
-      } else if(veteranRoster){
-        bonusNotes.push("This is also a battle-tested, experienced roster.");
-      }
+      while(tierIndex < tiers.length - 1 && score >= tiers[tierIndex].max) tierIndex++;
 
       tierLabel = tiers[tierIndex].label;
       tierDetail = tiers[tierIndex].detail;
