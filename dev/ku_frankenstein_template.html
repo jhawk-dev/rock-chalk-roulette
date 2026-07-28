@@ -954,7 +954,7 @@
       tierDetail = tiers[tierIndex].detail;
       bonusNotes.forEach(function(note){ tierDetail += " " + note; });
     }
-    return { sums: sums, fgAvg: fgAvg, picked: picked, tierLabel: tierLabel, tierDetail: tierDetail };
+    return { sums: sums, fgAvg: fgAvg, picked: picked, tierLabel: tierLabel, tierDetail: tierDetail, score: (picked === 5 ? Math.round(score) : null) };
   }
 
   function renderTracker(){
@@ -1132,6 +1132,21 @@
     ctx.fillStyle = soft;
     ctx.font = "600 24px JBMono, monospace";
     ctx.fillText("rockchalkroulette.com", W / 2, H - 24);
+
+    if(summary.score != null){
+      var badgeCx = 130, badgeCy = H - 40, badgeR = 44;
+      ctx.beginPath();
+      ctx.arc(badgeCx, badgeCy, badgeR, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(255,255,255,0.05)";
+      ctx.fill();
+      ctx.strokeStyle = "rgba(245,185,66,0.4)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.fillStyle = gold;
+      ctx.textAlign = "center";
+      ctx.font = "400 42px Bebas, sans-serif";
+      ctx.fillText(String(summary.score), badgeCx, badgeCy + 15);
+    }
 
     return canvas;
   }
