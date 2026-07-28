@@ -1014,7 +1014,7 @@
   }
 
   function drawRosterCanvas(){
-    var W = 1080, H = 1350;
+    var W = 1080, H = 1420;
     var canvas = document.createElement("canvas");
     canvas.width = W; canvas.height = H;
     var ctx = canvas.getContext("2d");
@@ -1053,7 +1053,21 @@
       ctx.fillText(line, W / 2, 300 + i * 34);
     });
 
-    var rowTop = 400, rowH = 128, rowGap = 14;
+    if(summary.score != null){
+      var badgeCy = 300 + detailLines.slice(0, 2).length * 34 + 32, badgeR = 34;
+      ctx.beginPath();
+      ctx.arc(W / 2, badgeCy, badgeR, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(255,255,255,0.05)";
+      ctx.fill();
+      ctx.strokeStyle = "rgba(245,185,66,0.4)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.fillStyle = gold;
+      ctx.font = "400 34px Bebas, sans-serif";
+      ctx.fillText(String(summary.score), W / 2, badgeCy + 12);
+    }
+
+    var rowTop = 460, rowH = 128, rowGap = 14;
     ctx.textAlign = "left";
     POSITIONS.forEach(function(pos, i){
       var y = rowTop + i * (rowH + rowGap);
@@ -1132,21 +1146,6 @@
     ctx.fillStyle = soft;
     ctx.font = "600 24px JBMono, monospace";
     ctx.fillText("rockchalkroulette.com", W / 2, H - 24);
-
-    if(summary.score != null){
-      var badgeCx = 130, badgeCy = H - 40, badgeR = 44;
-      ctx.beginPath();
-      ctx.arc(badgeCx, badgeCy, badgeR, 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(255,255,255,0.05)";
-      ctx.fill();
-      ctx.strokeStyle = "rgba(245,185,66,0.4)";
-      ctx.lineWidth = 2;
-      ctx.stroke();
-      ctx.fillStyle = gold;
-      ctx.textAlign = "center";
-      ctx.font = "400 42px Bebas, sans-serif";
-      ctx.fillText(String(summary.score), badgeCx, badgeCy + 15);
-    }
 
     return canvas;
   }
