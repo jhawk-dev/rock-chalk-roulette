@@ -65,12 +65,12 @@
     --parchment:#e7dcbf;
     --parchment-2:#dccda3;
     --card:#f8f2e2;
-    --crimson:#c8102e;
+    --crimson:#b20e28;
     --crimson-deep:#8f0a1f;
     --navy:#0051ba;
     --navy-soft:#4c86d6;
-    --gold:#a17c2e;
-    --gold-bright:#c99a3f;
+    --gold:#75581c;
+    --gold-bright:#8d681d;
     --line:rgba(28,23,18,0.2);
     --shadow:rgba(28,23,18,0.28);
     --led-bg:#0d1a10;
@@ -118,12 +118,12 @@
     --parchment:#e7dcbf;
     --parchment-2:#dccda3;
     --card:#f8f2e2;
-    --crimson:#c8102e;
+    --crimson:#b20e28;
     --crimson-deep:#8f0a1f;
     --navy:#0051ba;
     --navy-soft:#4c86d6;
-    --gold:#a17c2e;
-    --gold-bright:#c99a3f;
+    --gold:#75581c;
+    --gold-bright:#8d681d;
     --line:rgba(28,23,18,0.2);
     --shadow:rgba(28,23,18,0.28);
     --focus:#2c6fbb;
@@ -669,7 +669,7 @@
     var disabled = !!disabledReason;
     var cls = "card" + (disabled ? " disabled" : "") + (c.honor ? " honor" : "");
     var html = '<button type="button" class="' + cls + '"' + (disabled ? ' disabled' : '') + ' data-idx="' + i + '">';
-    if(c.honor) html += '<span class="honor-mark" title="Consensus All-American, National Player of the Year, or Final Four MOP">&#9733;</span>';
+    if(c.honor) html += '<span class="honor-mark" role="img" aria-label="Consensus All-American, National Player of the Year, or Final Four MOP" title="Consensus All-American, National Player of the Year, or Final Four MOP">&#9733;</span>';
     html += '<div class="card-top"><div><div class="name">' + c.name + '</div>' +
       '<div class="season">' + c.season + (c.classYear ? " &middot; " + c.classYear : "") + (c.footnote ? " †" : "") + '</div></div>' +
       '<div class="pos">' + c.pos + '</div></div>';
