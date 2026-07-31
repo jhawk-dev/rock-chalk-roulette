@@ -1079,6 +1079,7 @@
           "C"
         ],
         "ppg": 21.8,
+        "rpg": 7.7,
         "fg": 42.9,
         "ft": 64.6,
         "blurb": "Consensus All-American and Final Four Most Outstanding Player — led the nation in scoring and cut down the nets in the same season, still the only player in NCAA history to do both. Earned as a senior (1951–52).",
@@ -1354,6 +1355,7 @@
           "C"
         ],
         "ppg": 22.8,
+        "rpg": 9.9,
         "fg": 44.2,
         "ft": 65.2,
         "blurb": "Consensus All-American and Final Four Most Outstanding Player — led the nation in scoring and cut down the nets in the same season, still the only player in NCAA history to do both. Earned as a senior (1951–52).",
@@ -1631,6 +1633,7 @@
           "C"
         ],
         "ppg": 28.6,
+        "rpg": 12.8,
         "fg": 53.3,
         "ft": 72.8,
         "blurb": "Consensus All-American and Final Four Most Outstanding Player — led the nation in scoring and cut down the nets in the same season, still the only player in NCAA history to do both. Earned as a senior (1951–52).",
@@ -1711,6 +1714,7 @@
           "C"
         ],
         "ppg": 18.9,
+        "rpg": 11.2,
         "ft": 63.2,
         "blurb": "1953 Final Four Most Outstanding Player — the first ever to win it from a non-champion team. Earned as a junior (1952–53).",
         "honor": true,
@@ -1946,6 +1950,7 @@
           "C"
         ],
         "ppg": 19.0,
+        "rpg": 9.6,
         "ft": 66.3,
         "blurb": "1953 Final Four Most Outstanding Player — the first ever to win it from a non-champion team. Earned as a junior (1952–53).",
         "honor": true,
@@ -18960,6 +18965,23 @@
         "ft": 87.2,
         "blurb": "6-7 guard from Dallas, Texas.",
         "classYear": "Senior"
+      },
+      {
+        "name": "Melvin Council Jr.",
+        "season": "2025–26",
+        "pos": "G",
+        "posEligible": [
+          "G"
+        ],
+        "ppg": 12.7,
+        "rpg": 5.0,
+        "apg": 5.1,
+        "spg": 1.0,
+        "fg": 39.2,
+        "tp": 30.8,
+        "ft": 77.5,
+        "blurb": "6-4 guard from Rochester, N.Y.",
+        "classYear": "Grad transfer"
       }
     ]
   }
